@@ -1,0 +1,159 @@
+/*==========================================
+        RESPONSIVE
+==========================================*/
+
+@media(max-width:991px){
+
+    section{
+
+        padding:70px 0;
+
+    }
+
+}
+
+@media(max-width:767px){
+
+    h1{
+
+        font-size:38px;
+
+    }
+
+    h2{
+
+        font-size:30px;
+
+    }
+
+}
+
+/*=========================================
+            HERO RESPONSIVE
+=========================================*/
+
+@media(max-width:991px){
+
+.hero{
+
+    text-align:center;
+
+}
+
+.hero-title{
+
+    font-size:45px;
+
+}
+
+.hero-buttons{
+
+    justify-content:center;
+
+}
+
+.hero-image{
+
+    margin-top:50px;
+
+}
+
+}
+
+@media(max-width:576px){
+
+.hero-title{
+
+    font-size:34px;
+
+}
+
+.hero-description{
+
+    font-size:17px;
+
+}
+
+.hero-buttons{
+
+    flex-direction:column;
+
+}
+
+.hero-buttons a{
+
+    width:100%;
+
+    text-align:center;
+
+}
+
+}
+
+/*==================================
+        CTA RESPONSIVE
+===================================*/
+
+@media(max-width:991px){
+
+    .cta-box{
+
+        padding:50px 30px;
+
+        text-align:center;
+
+    }
+
+    .cta-box h2{
+
+        font-size:36px;
+
+    }
+
+    .cta-btn,
+    .cta-btn-outline{
+
+        display:block;
+
+        margin:15px auto;
+
+        width:220px;
+
+    }
+
+}
+
+/*==================================
+        FOOTER RESPONSIVE
+===================================*/
+
+@media(max-width:991px){
+
+    .footer{
+
+        text-align:center;
+
+    }
+
+    .footer-logo{
+
+        margin:0 auto 20px;
+
+    }
+
+    .social-icons{
+
+        justify-content:center;
+
+    }
+
+    .footer-bottom{
+
+        justify-content:center;
+
+        text-align:center;
+
+    }
+
+}
+

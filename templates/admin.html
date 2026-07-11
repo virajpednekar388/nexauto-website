@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexAuto Admin Dashboard</title>
+    
+    <!-- Bootstrap CSS for clean styling -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- This tag automatically refreshes the page every 30 seconds to fetch new students -->
+    <meta http-equiv="refresh" content="30">
+</head>
+<body class="bg-light p-4 p-md-5">
+
+    <div class="container bg-white p-4 rounded-4 shadow-sm border">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h2 class="mb-1 text-primary fw-bold">NexAuto Admissions</h2>
+                <p class="text-muted mb-0">Live Student Registration Dashboard (Auto-refreshes every 30s)</p>
+            </div>
+            <div>
+                <a href="/" class="btn btn-outline-secondary btn-sm me-2">View Website</a>
+                <a href="/logout" class="btn btn-danger btn-sm">Logout</a>
+            </div>
+        </div>
+        
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Date & Time Applied</th>
+                        <th>Student Name</th>
+                        <th>Phone Number</th>
+                        <th>Email Address</th>
+                        <th>Course Selected</th>
+                        <th>Education Background</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Jinja2 loop to display all students from the database -->
+                    {% for student in students %}
+                    <tr>
+                        <td><strong>#{{ student.id }}</strong></td>
+                        <td>{{ student.timestamp.strftime('%d-%b-%Y %I:%M %p') }}</td>
+                        <td class="fw-bold">{{ student.name }}</td>
+                        <td>
+                            <!-- Clickable WhatsApp link for easy contacting -->
+                            <a href="https://wa.me/91{{ student.phone }}" target="_blank" class="text-decoration-none text-success fw-bold">
+                                {{ student.phone }}
+                            </a>
+                        </td>
+                        <td><a href="mailto:{{ student.email }}" class="text-decoration-none">{{ student.email }}</a></td>
+                        <td><span class="badge bg-primary fs-6">{{ student.course }}</span></td>
+                        <td>{{ student.education }}</td>
+                    </tr>
+                    {% else %}
+                    <!-- Displayed if the database is currently empty -->
+                    <tr>
+                        <td colspan="7" class="text-center py-4 text-muted">
+                            <em>No students have applied yet. The table will populate automatically when a submission is made.</em>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,56 @@
+<section class="page-banner">
+    <div class="container">
+        <div class="page-banner-content">
+            <h1>Course Registration</h1>
+            <p>Home <span>/</span> Admission</p>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 bg-white">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card shadow-lg border-0 rounded-4 p-5">
+                    <div class="text-center mb-4">
+                        <h2 class="section-title">Apply for Admission</h2>
+                        <p class="text-muted">Fill out the unified dashboard form below to log details straight into Neon.</p>
+                    </div>
+                    
+                    <form id="admissionForm">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Full Name</label>
+                                <input type="text" class="form-control" name="Name" required placeholder="Enter full name">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Phone Number</label>
+                                <input type="tel" class="form-control" name="Phone" required placeholder="WhatsApp reachable contact number">
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label fw-bold">Email Address</label>
+                                <input type="email" class="form-control" name="Email" required placeholder="Enter communication email address">
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label fw-bold">Select Course Track</label>
+                                <select class="form-select" name="Course" required>
+                                    <option value="" disabled selected>Choose target course curriculum...</option>
+                                    <option value="Level 1 PLC">Level 1 PLC Programming</option>
+                                    <option value="Level 2 Advanced PLC">Level 2 Advanced PLC</option>
+                                    <option value="Level 3 SCADA & HMI">Level 3 SCADA & HMI</option>
+                                </select>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label fw-bold">Educational Background</label>
+                                <input type="text" class="form-control" name="Education" placeholder="e.g., Diploma in Instrumentation Engineering, B.E., etc.">
+                            </div>
+                            <div class="col-12 mt-4">
+                                <button type="submit" class="btn btn-warning text-white w-100 py-3 fw-bold">Submit Application</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
