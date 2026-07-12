@@ -1,21 +1,77 @@
+<!-- ANIMATION STYLES -->
+<style>
+    /* Smooth floating animation for the main robot image */
+    @keyframes floatMain {
+        0% {
+            transform: translateY(0px);
+        }
+
+        50% {
+            transform: translateY(-18px);
+        }
+
+        100% {
+            transform: translateY(0px);
+        }
+    }
+
+    /* Reverse timing for the panel so they move independently */
+    @keyframes floatSub {
+        0% {
+            transform: translateY(0px);
+        }
+
+        50% {
+            transform: translateY(12px);
+        }
+
+        100% {
+            transform: translateY(0px);
+        }
+    }
+
+    .moving-robot {
+        animation: floatMain 4s ease-in-out infinite;
+    }
+
+    .moving-panel {
+        animation: floatSub 5s ease-in-out infinite;
+    }
+</style>
+
 <section class="hero">
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-6">
                 <span class="hero-tag">WELCOME TO NEXAUTO INSTITUTE</span>
                 <h1 class="hero-title">BUILD YOUR CAREER IN <span>INDUSTRIAL AUTOMATION</span></h1>
-                <p class="hero-description">Learn PLC, SCADA, HMI, Industrial Instrumentation, and Industry 4.0 technologies through hands-on practical training.</p>
+                <p class="hero-description">Learn PLC, SCADA, HMI, Industrial Instrumentation, and Industry 4.0
+                    technologies through hands-on practical training.</p>
                 <div class="hero-buttons">
                     <a href="/courses" class="btn-orange" data-link>Explore Courses</a>
                     <a href="/contact" class="btn-outline-custom" data-link>Contact Us</a>
                 </div>
             </div>
             <div class="col-lg-6">
-                <div class="hero-image">
-                    <img src="/static/images/hero.png" alt="Industrial Automation Panel">
+                <!-- Container with a "Glassy" blurred effect -->
+                <div class="video-wrapper" style="
+        position: relative; 
+        padding: 20px; /* This creates the 'border' area */
+        border-radius: 40px; /* Smooth rounded corners */
+        background: rgba(255, 255, 255, 0.1); /* Semi-transparent white */
+        backdrop-filter: blur(15px); /* The " cloudy" blur effect */ -webkit-backdrop-filter: blur(15px); /* Safari
+                    support */ border: 2px solid rgba(255, 255, 255, 0.2); box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+                    overflow: hidden;">
+
+                    <!-- The Video -->
+                    <video width="100%" height="auto" autoplay muted loop playsinline style="border-radius: 25px;">
+                        <source src="/static/videos/industrial-demo.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </section>
 

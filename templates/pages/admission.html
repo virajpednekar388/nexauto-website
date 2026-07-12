@@ -34,16 +34,16 @@
                             <div class="col-md-12">
                                 <label class="form-label fw-bold">Select Course Track</label>
                                 <select class="form-select" name="Course" required>
-                                    <option value="" disabled selected>Choose target course curriculum...</option>
-                                    <option value="Level 1 PLC">Level 1 PLC Programming</option>
-                                    <option value="Level 2 Advanced PLC">Level 2 Advanced PLC</option>
-                                    <option value="Level 3 SCADA & HMI">Level 3 SCADA & HMI</option>
-                                    <option value="Level 4 SCADA & HMI">All Combine Levels</option>
+                                    <option aria-required="true" value="" disabled selected>Choose target course curriculum...</option>
+                                    <option aria-required="true" value="Level 1 PLC">Level 1 PLC Programming</option>
+                                    <option aria-required="true" value="Level 2 Advanced PLC">Level 2 Advanced PLC</option>
+                                    <option aria-required="true" value="Level 3 SCADA & HMI">Level 3 SCADA & HMI</option>
+                                    <option aria-required="true" value="All Combine Levels">All Combine Levels</option>
                                 </select>
                             </div>
                             <div class="col-md-12">
                                 <label class="form-label fw-bold">Educational Background</label>
-                                <input type="text" class="form-control" name="Education" placeholder="e.g., Diploma in Instrumentation Engineering, B.E., etc.">
+                                <input required type="text" class="form-control" name="Education" placeholder="e.g.Diploma, B.E., ITI, In-Service Candidate, Corporate Employee etc.">
                             </div>
                             <div class="col-12 mt-4">
                                 <button type="submit" class="btn btn-warning text-white w-100 py-3 fw-bold">Submit Application</button>

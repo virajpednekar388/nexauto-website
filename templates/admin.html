@@ -3,70 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NexAuto Admin Dashboard</title>
-    
-    <!-- Bootstrap CSS for clean styling -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
-    
-    <!-- This tag automatically refreshes the page every 30 seconds to fetch new students -->
-    <meta http-equiv="refresh" content="30">
+    <title>NexAuto Institute - Admin Dashboard</title>
+    <!-- Modern Styling Framework -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="bg-light p-4 p-md-5">
+<body class="bg-gray-50 font-sans text-gray-800">
 
-    <div class="container bg-white p-4 rounded-4 shadow-sm border">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <div>
-                <h2 class="mb-1 text-primary fw-bold">NexAuto Admissions</h2>
-                <p class="text-muted mb-0">Live Student Registration Dashboard (Auto-refreshes every 30s)</p>
-            </div>
-            <div>
-                <a href="/" class="btn btn-outline-secondary btn-sm me-2">View Website</a>
-                <a href="/logout" class="btn btn-danger btn-sm">Logout</a>
-            </div>
+    <!-- Top Navigation Bar -->
+    <nav class="bg-slate-900 text-white shadow-md px-6 py-4 flex justify-between items-center">
+        <div class="flex items-center space-x-3">
+            <i class="fa-solid fa-sliders text-cyan-400 text-2xl"></i>
+            <span class="text-xl font-bold tracking-wide">NexAuto Core System</span>
         </div>
+        <div class="flex items-center space-x-6">
+            <span class="text-sm bg-slate-800 px-3 py-1.5 rounded-md border border-slate-700 text-gray-300">
+                <i class="fa-solid fa-user-shield text-cyan-400 mr-2"></i>Admin Mode
+            </span>
+            <a href="/logout" class="bg-red-600 hover:bg-red-700 text-white font-medium px-4 py-2 rounded-lg transition-all shadow-sm text-sm">
+                <i class="fa-solid fa-arrow-right-from-bracket mr-2"></i>Logout
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="max-w-7xl mx-auto p-6 lg:p-8 space-y-8">
         
-        <div class="table-responsive">
-            <table class="table table-hover table-bordered align-middle">
-                <thead class="table-dark">
-                    <tr>
-                        <th>ID</th>
-                        <th>Date & Time Applied</th>
-                        <th>Student Name</th>
-                        <th>Phone Number</th>
-                        <th>Email Address</th>
-                        <th>Course Selected</th>
-                        <th>Education Background</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Jinja2 loop to display all students from the database -->
-                    {% for student in students %}
-                    <tr>
-                        <td><strong>#{{ student.id }}</strong></td>
-                        <td>{{ student.timestamp.strftime('%d-%b-%Y %I:%M %p') }}</td>
-                        <td class="fw-bold">{{ student.name }}</td>
-                        <td>
-                            <!-- Clickable WhatsApp link for easy contacting -->
-                            <a href="https://wa.me/91{{ student.phone }}" target="_blank" class="text-decoration-none text-success fw-bold">
-                                {{ student.phone }}
-                            </a>
-                        </td>
-                        <td><a href="mailto:{{ student.email }}" class="text-decoration-none">{{ student.email }}</a></td>
-                        <td><span class="badge bg-primary fs-6">{{ student.course }}</span></td>
-                        <td>{{ student.education }}</td>
-                    </tr>
-                    {% else %}
-                    <!-- Displayed if the database is currently empty -->
-                    <tr>
-                        <td colspan="7" class="text-center py-4 text-muted">
-                            <em>No students have applied yet. The table will populate automatically when a submission is made.</em>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+        <!-- Header Banner Section -->
+        <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-xs flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div>
+                <h1 class="text-2xl font-black text-slate-900 tracking-tight">Student Admissions Overview</h1>
+                <p class="text-sm text-gray-500 mt-1">Real-time control matrix pulling live records directly from your Supabase engine.</p>
+            </div>
+            <!-- Total Count Card -->
+            <div class="bg-gradient-to-br from-slate-900 to-slate-800 text-white px-6 py-4 rounded-xl shadow-md min-w-[200px]">
+                <p class="text-xs uppercase tracking-wider font-semibold text-cyan-400">Total Registered</p>
+                <p class="text-3xl font-black mt-1">{{ total_students }} <span class="text-sm font-normal text-gray-400">Students</span></p>
+            </div>
         </div>
-    </div>
+
+        <!-- Automated Cohort Batches Monitoring Block -->
+        <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-xs">
+            <h2 class="text-lg font-bold text-slate-900 flex items-center mb-4">
+                <i class="fa-solid fa-cubes text-cyan-600 mr-2.5"></i>Live Batches Status (Max 10 per Batch)
+            </h2>
+            
+            {% if batches %}
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3.5">
+                {% for batch in batches %}
+                <div class="border border-gray-100 rounded-xl p-3.5 bg-gray-50/50 flex flex-col items-center relative overflow-hidden group">
+                    <span class="text-xs font-bold text-gray-400 uppercase">Batch {{ batch.number }}</span>
+                    <span class="text-2xl font-black text-slate-800 mt-1">{{ batch.count }} / 10</span>
+                    
+                    <!-- Dynamic visual indicator bar -->
+                    <div class="w-full bg-gray-200 h-1.5 rounded-full mt-2.5 mb-3 overflow-hidden">
+                        <div class="bg-cyan-500 h-full rounded-full transition-all duration-500" style="width: {{ (batch.count / 10) * 100 }}%"></div>
+                    </div>
+
+                    <!-- NEW: Excel Download Button -->
+                    <a href="/admin/download_batch/{{ batch.number }}" class="w-full bg-green-50 hover:bg-green-100 text-green-700 font-medium py-1.5 rounded-lg text-xs flex justify-center items-center transition-colors border border-green-200 shadow-sm" title="Download Batch Data as Excel">
+                        <i class="fa-solid fa-file-excel mr-1.5"></i> Excel
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p class="text-sm text-gray-400 italic">No batches formed yet. Registered students will group here automatically.</p>
+            {% endif %}
+        </div>
+
+        <!-- Main Student Information Matrix Table -->
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-xs overflow-hidden">
+            <div class="px-6 py-5 border-b border-gray-100 bg-gray-50/50 flex justify-between items-center">
+                <h2 class="text-lg font-bold text-slate-900 flex items-center">
+                    <i class="fa-solid fa-users text-cyan-600 mr-2.5"></i>Master Student Directory
+                </h2>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-slate-900 text-white uppercase text-xs font-bold tracking-wider">
+                            <th class="px-6 py-4">ID</th>
+                            <th class="px-6 py-4">Student Profile</th>
+                            <th class="px-6 py-4">Contact Info</th>
+                            <th class="px-6 py-4">Course Enrolled</th>
+                            <th class="px-6 py-4">Education</th>
+                            <th class="px-6 py-4 text-center">Assigned Batch</th>
+                            <th class="px-6 py-4 text-right">Control Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        {% for student in students %}
+                        <tr class="hover:bg-gray-50/70 transition-colors">
+                            <td class="px-6 py-4 font-mono text-xs text-gray-400">#{{ student.id }}</td>
+                            <td class="px-6 py-4 font-semibold text-slate-900">{{ student.name }}</td>
+                            <td class="px-6 py-4 space-y-0.5">
+                                <div class="text-sm text-gray-700 flex items-center"><i class="fa-solid fa-envelope text-gray-400 w-4 mr-1"></i>{{ student.email }}</div>
+                                <div class="text-xs text-gray-500 flex items-center"><i class="fa-solid fa-phone text-gray-400 w-4 mr-1"></i>{{ student.phone }}</div>
+                            </td>
+                            <td class="px-6 py-4">
+                                <span class="bg-cyan-50 border border-cyan-100 text-cyan-700 text-xs font-bold px-2.5 py-1 rounded-md">
+                                    {{ student.course }}
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-600">{{ student.education or '—' }}</td>
+                            <td class="px-6 py-4 text-center">
+                                <span class="bg-slate-900 text-cyan-400 text-xs font-mono font-bold px-3 py-1 rounded-full shadow-xs">
+                                    B-{{ student.batch_number }}
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 text-right">
+                                <div class="flex items-center justify-end space-x-2">
+                                    <!-- PDF Engine Download Hook -->
+                                    <a href="/admin/download_pdf/{{ student.id }}" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium px-3 py-2 rounded-lg transition-all text-xs flex items-center shadow-xs" title="Download Document Profile">
+                                        <i class="fa-solid fa-file-pdf text-red-500 mr-1.5 text-sm"></i>PDF
+                                    </a>
+                                    
+                                    <!-- CRUD Delete Form Action Trigger -->
+                                    <form action="/admin/delete/{{ student.id }}" method="POST" onsubmit="return confirm('Are you completely sure you want to permanently delete this student record from Supabase?');" class="inline">
+                                        <button type="submit" class="bg-red-50 hover:bg-red-100 text-red-600 font-medium px-3 py-2 rounded-lg transition-all text-xs flex items-center shadow-xs" title="Delete Student Record">
+                                            <i class="fa-solid fa-trash-can mr-1.5"></i>Delete
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="7" class="px-6 py-12 text-center text-gray-400 italic bg-gray-50/30">
+                                <i class="fa-solid fa-folder-open text-3xl mb-3 block text-gray-300"></i> No student applications discovered in the Supabase tables yet.
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
 
 </body>
 </html>

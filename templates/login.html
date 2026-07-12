@@ -4,41 +4,80 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login | NexAuto</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Tailwind and FontAwesome -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="bg-light d-flex align-items-center justify-content-center" style="height: 100vh;">
+<body class="bg-gray-50 h-screen flex items-center justify-center font-sans text-gray-800">
 
-    <div class="card shadow-sm border-0 rounded-4" style="width: 100%; max-width: 400px;">
-        <div class="card-body p-5">
-            <div class="text-center mb-4">
-                <h3 class="fw-bold text-primary">Admin Portal</h3>
-                <p class="text-muted">Enter credentials to access student records.</p>
+    <div class="bg-white p-8 sm:p-10 rounded-2xl shadow-sm border border-gray-100 w-full max-w-md">
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-blue-600 mb-2">Admin Portal</h1>
+            <p class="text-gray-500 text-sm">Enter credentials to access student records.</p>
+        </div>
+
+        <!-- Flask Error Message Display (Triggers on wrong password) -->
+        {% if error %}
+        <div class="bg-red-50 text-red-600 p-3 rounded-lg text-sm mb-6 text-center border border-red-100">
+            {{ error }}
+        </div>
+        {% endif %}
+
+        <form action="/login" method="POST" class="space-y-5">
+            <!-- Username Field -->
+            <div>
+                <label class="block text-sm font-bold mb-1.5 text-gray-900">Username</label>
+                <input type="text" name="username" required 
+                       class="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-100 outline-none transition-all">
             </div>
 
-            <!-- Error Message Box -->
-            {% if error %}
-                <div class="alert alert-danger text-center p-2 mb-4" role="alert">
-                    {{ error }}
+            <!-- Password Field with View Toggle -->
+            <div>
+                <label class="block text-sm font-bold mb-1.5 text-gray-900">Password</label>
+                <div class="relative">
+                    <!-- Added pr-12 to prevent text from typing behind the icon -->
+                    <input type="password" name="password" id="passwordField" required 
+                           class="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-100 outline-none transition-all pr-12">
+                    
+                    <!-- Absolute positioned toggle button -->
+                    <button type="button" onclick="togglePassword()" tabindex="-1"
+                            class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-blue-600 p-2 transition-colors focus:outline-none">
+                        <i class="fa-solid fa-eye" id="eyeIcon"></i>
+                    </button>
                 </div>
-            {% endif %}
-
-            <form method="POST" action="/login">
-                <div class="mb-3">
-                    <label class="form-label fw-bold">Username</label>
-                    <input type="text" class="form-control py-2" name="username" required>
-                </div>
-                <div class="mb-4">
-                    <label class="form-label fw-bold">Password</label>
-                    <input type="password" class="form-control py-2" name="password" required>
-                </div>
-                <button type="submit" class="btn btn-primary w-100 py-2 fw-bold">Secure Login</button>
-            </form>
-            
-            <div class="text-center mt-4">
-                <a href="/" class="text-decoration-none text-muted small">← Back to Main Website</a>
             </div>
+
+            <!-- Submit Button -->
+            <button type="submit" 
+                    class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg transition-all shadow-md hover:shadow-lg mt-2">
+                Secure Login
+            </button>
+        </form>
+
+        <div class="text-center mt-6">
+            <a href="/" class="text-sm text-gray-500 hover:text-gray-800 transition-colors">
+                &larr; Back to Main Website
+            </a>
         </div>
     </div>
 
+    <!-- Script to handle the toggle logic -->
+    <script>
+        function togglePassword() {
+            const passwordInput = document.getElementById('passwordField');
+            const eyeIcon = document.getElementById('eyeIcon');
+            
+            // Swap the input type and the FontAwesome icon classes
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeIcon.classList.remove('fa-eye');
+                eyeIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                eyeIcon.classList.remove('fa-eye-slash');
+                eyeIcon.classList.add('fa-eye');
+            }
+        }
+    </script>
 </body>
 </html>
